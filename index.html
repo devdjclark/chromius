@@ -1,0 +1,102 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Digital Color Systems and Quantization</title>
+        
+    </head>
+    <body>
+        <header>
+            <h1>Digital Color Systems and Quantization</h1>
+        </header>
+
+        <nav>
+            <!-- nav bar links here -->
+        </nav>
+        
+        <!-- how displays create color (the RGB model) -->
+        <section>
+            <h2>How Displays Create Color: The RGB Model</h2>
+            <p>
+                Screens do not use physical ink; they produce color through additive mixing of light using clusters of microscopic Red, Green, and Blue (RGB) sub-pixel LEDs. 
+                By adjusting the intensity of each primary light channel from full darkness to full brightness, 
+                a screen can reproduce practically any color.
+            </p>
+
+            <p>To control these light intensities electronically, the computer must convert them into numbers.</p>
+        </section>
+        
+        <!-- storing colors as numbers -->
+        <section>
+            <h2>Storing Colors as Numbers</h2>
+            <p>
+                In modern digital media, full-color images use 24-bit color depth.
+                Each pixel allocates 3 bytes (24 bits)—one dedicated byte (8 bits) to each RGB channel.
+            </p>
+            <ul>
+                <li>Each channel has 2<sup>8</sup> = 256 discrete intensity levels (0 to 255).</li>
+                <li>Multiplying the channels (256 × 256 × 256) produces 16,777,216 distinct color combinations.</li>
+                <li>These numerical values are represented on the web as Hex color codes (e.g., #D18602 or #339900).</li>
+            </ul>
+            <p>
+                While 16.7 million colors look smooth and lifelike, light in nature is infinite and unbroken. 
+                Turning continuous light into numbers requires two distinct steps: sampling and quantization.
+            </p>
+        </section>
+
+        <!-- the digitization process -->
+        <section>
+            <h2>The Digitization Process</h2>
+            <p>The process of converting continuous light into digital numbers involves two key steps: sampling and quantization.</p>
+            <div class="card">
+                <div class="card-body">
+                    <h3>Sampling</h3>
+                    <p>Divides continuous space into a grid of discrete pixels (e.g., 1920 × 1080 screen resolution).
+                        It answers the question, "Where and how often do we measure?"
+                    </p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <h3>Quantization</h3>
+                    <p>Maps infinite, continuous light values into a finite set of allowed digital numbers (0-255).
+                        It answers the question, "What fixed value do we round each color to?"
+                    </p>
+                </div>
+            </div>
+            <p>
+                Storing 24 bits for every pixel creates large files. 
+                To save bandwidth and storage, we use color quantization to compress the color data.
+            </p>
+        </section>
+
+        <!-- compression via color quantization & indexing -->
+        <section>
+            <h2>Compression via Color Quantization & Indexing</h2>
+            <p>
+                Color Quantization is the process of reducing an image’s palette from millions of colors down to a compact set (typically 8-bit / 256 colors) while keeping it visually recognizable.
+                The computer plots every pixel's (R,G,B) value into a 3D coordinate space and groups nearby shades into clusters, 
+                picking a single representative "centroid" color for each cluster.
+            </p>
+            <div>
+                <p>Instead of saving full 24-bit RGB values inside every pixel, the image saves:</p>
+                <ul>
+                    <li>A master palette table (LUT) holding only the 256 selected colors.</li>
+                    <li>The pixel data itself, where each pixel only needs a single byte pointing to an index number (0-255) in the table.</li>
+                </ul>
+            </div>
+            <p>While this dramatically cuts file size, rounding colors to a smaller palette has visual consequences.</p>
+        </section>
+
+        <!-- quantization artifacts -->
+        <section>
+            <h2>Quantization Artifacts</h2>
+            <p>
+                When there are not enough discrete color levels to recreate subtle tone shifts (like a sky or soft shadow), 
+                smooth transitions collapse into visible, step-like stripes known as <i>color banding</i>.
+            </p>
+        </section>
+
+        
+    </body>
+</html>
