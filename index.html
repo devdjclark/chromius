@@ -3,7 +3,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Digital Color Systems and Quantization</title>
-        
+        <link href="style.css" rel="stylesheet">
     </head>
     <body>
         <header>
@@ -22,6 +22,7 @@
                 By adjusting the intensity of each primary light channel from full darkness to full brightness, 
                 a screen can reproduce practically any color.
             </p>
+            <img src="images/rgb-model.png">
 
             <p>To control these light intensities electronically, the computer must convert them into numbers.</p>
         </section>
@@ -38,6 +39,8 @@
                 <li>Multiplying the channels (256 × 256 × 256) produces 16,777,216 distinct color combinations.</li>
                 <li>These numerical values are represented on the web as Hex color codes (e.g., #D18602 or #339900).</li>
             </ul>
+            <img src="images/color-wheel.png">
+
             <p>
                 While 16.7 million colors look smooth and lifelike, light in nature is infinite and unbroken. 
                 Turning continuous light into numbers requires two distinct steps: sampling and quantization.
@@ -85,6 +88,8 @@
                     <li>The pixel data itself, where each pixel only needs a single byte pointing to an index number (0-255) in the table.</li>
                 </ul>
             </div>
+            <img src="images/look-up-table.png">
+            
             <p>While this dramatically cuts file size, rounding colors to a smaller palette has visual consequences.</p>
         </section>
 
@@ -95,6 +100,7 @@
                 When there are not enough discrete color levels to recreate subtle tone shifts (like a sky or soft shadow), 
                 smooth transitions collapse into visible, step-like stripes known as <i>color banding</i>.
             </p>
+            <img src="images/color-banding.png">
         </section>
 
         
