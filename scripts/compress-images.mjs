@@ -11,7 +11,7 @@ async function compress(file) {
   await rename(tmp, file);
   const after = (await stat(file)).size;
   const pct = (((before - after) / before) * 100).toFixed(1);
-  console.log(`${file}: ${(before / 1024 / 1024).toFixed(1)} MB -> ${(after / 1024).toFixed(1)} KB (${pct}% smaller)`);
+  console.log(`${file}: ${(before / 1024).toFixed(1)} KB -> ${(after / 1024).toFixed(1)} KB (${pct}% smaller)`);
 }
 
 for (const file of FILES) {
