@@ -1,0 +1,133 @@
+@import "tailwindcss";
+@import "./bloom.css";
+
+@theme {
+  --color-bg: #000000;
+  --color-ink: #F4F4F5;
+  --color-ink-2: rgba(255, 255, 255, .76);
+  --color-ink-3: rgba(255, 255, 255, .66);
+  --color-nav-rest: #5A5A5F;
+  --color-red: #FF2B2B;
+  --color-green: #19E65C;
+  --color-blue: #2B5BFF;
+  --color-magenta: #FF2BD6;
+  --color-cyan: #2BDCFF;
+  --color-yellow: #FFD02B;
+  --color-orange: #FF8A2B;
+
+  --font-sans: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --font-mono: 'JetBrains Mono', Consolas, 'SFMono-Regular', 'Courier New', monospace;
+
+  --tracking-hero: -0.045em;
+  --tracking-h2: -0.03em;
+  --tracking-h3: -0.02em;
+  --tracking-label: .14em;
+}
+
+@font-face { font-family: 'Inter'; src: url('/fonts/inter/Inter-300.woff2') format('woff2'); font-weight: 300; font-display: swap; }
+@font-face { font-family: 'Inter'; src: url('/fonts/inter/Inter-400.woff2') format('woff2'); font-weight: 400; font-display: swap; }
+@font-face { font-family: 'Inter'; src: url('/fonts/inter/Inter-500.woff2') format('woff2'); font-weight: 500; font-display: swap; }
+@font-face { font-family: 'JetBrains Mono'; src: url('/fonts/jetbrains-mono/JetBrains-Mono-400.woff2') format('woff2'); font-weight: 400; font-display: swap; }
+@font-face { font-family: 'JetBrains Mono'; src: url('/fonts/jetbrains-mono/JetBrains-Mono-500.woff2') format('woff2'); font-weight: 500; font-display: swap; }
+
+body {
+  background: var(--color-bg);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-kerning: normal;
+  line-height: 1.55;
+}
+
+/* one full-viewport, full-black section per page block */
+.section { position: relative; overflow: hidden; background: #000; min-height: 100vh; }
+.section--hero { min-height: max(100vh, 900px); }
+
+.section-pad {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 36px;
+  padding: 56px 20px 48px 48px;
+}
+@media (min-width: 1024px) { .section-pad { padding: 72px 140px; } }
+
+.section-pad--hero { padding: 56px 20px 48px 48px; }
+@media (min-width: 1024px) { .section-pad--hero { padding: 44px 140px 48px; } }
+
+/* typography: clamp(mobile, interpolated, desktop) sized from DESIGN.md's dual values */
+.h1-hero { font-weight: 300; line-height: .95; letter-spacing: var(--tracking-hero); white-space: nowrap; font-size: clamp(64px, 22.4px + 10.667vw, 176px); }
+.h2 { font-weight: 300; letter-spacing: var(--tracking-h2); white-space: nowrap; line-height: 1.1; font-size: clamp(34px, 22.857px + 2.857vw, 64px); }
+.h3 { font-weight: 300; letter-spacing: var(--tracking-h3); line-height: 1.2; font-size: clamp(20px, 18.514px + .381vw, 24px); }
+.intro { color: var(--color-ink-2); line-height: 1.55; font-size: clamp(16px, 14.886px + .286vw, 19px); }
+.body-text { line-height: 1.55; font-size: clamp(14px, 13.257px + .190vw, 16px); }
+.hero-overview { color: var(--color-ink-2); line-height: 1.5; font-size: clamp(18px, 15.771px + .571vw, 24px); }
+.mono-label { font-family: var(--font-mono); text-transform: uppercase; letter-spacing: var(--tracking-label); color: var(--color-ink-3); line-height: 1.5; font-size: clamp(11px, 10.629px + .095vw, 12px); }
+.stat-number { font-weight: 300; letter-spacing: var(--tracking-h3); line-height: 1.1; font-size: clamp(22px, 19.029px + .762vw, 30px); }
+
+.glass {
+  background: rgba(255, 255, 255, .025);
+  border: 1px solid rgba(255, 255, 255, .09);
+  box-shadow: inset 1px 1px 0 rgba(255, 255, 255, .14), 0 20px 60px rgba(0, 0, 0, .15);
+  border-radius: 22px;
+}
+@media (min-width: 1024px) { .glass { border-radius: 26px; } }
+
+.well { background: rgba(0, 0, 0, .14); border: 1px solid rgba(255, 255, 255, .06); border-radius: 16px; }
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  height: 48px;
+  padding: 0 20px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .04);
+  border: 1px solid rgba(255, 255, 255, .14);
+  box-shadow: inset 1px 1px 0 rgba(255, 255, 255, .14);
+  color: var(--color-ink);
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-label);
+  font-size: 12px;
+  cursor: pointer;
+}
+@media (min-width: 1024px) { .btn { height: 52px; } }
+.btn:focus-visible { outline: 2px solid white; outline-offset: 2px; }
+
+/* custom range input: 3px track, 20px flat glass thumb tinted per channel via --thumb-color */
+input[type='range'].slider { -webkit-appearance: none; appearance: none; width: 100%; height: 36px; background: transparent; }
+input[type='range'].slider:focus-visible { outline: 2px solid white; outline-offset: 2px; }
+input[type='range'].slider::-webkit-slider-runnable-track { height: 3px; background: rgba(255, 255, 255, .22); }
+input[type='range'].slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  margin-top: -8.5px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, .5);
+  box-shadow: inset 1px 1px 0 rgba(255, 255, 255, .28);
+  background: radial-gradient(circle closest-side, var(--thumb-color, #fff) 0 3.5px, rgba(255, 255, 255, .08) 4.5px);
+}
+input[type='range'].slider::-moz-range-track { height: 3px; background: rgba(255, 255, 255, .22); }
+input[type='range'].slider::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, .5);
+  box-shadow: inset 1px 1px 0 rgba(255, 255, 255, .28);
+  background: radial-gradient(circle closest-side, var(--thumb-color, #fff) 0 3.5px, rgba(255, 255, 255, .08) 4.5px);
+}
+
+.nav { position: fixed; top: 50%; left: 10px; z-index: 50; display: flex; flex-direction: column; gap: 8px; transform: translateY(-50%); }
+@media (min-width: 1024px) { .nav { left: 40px; } }
+.nav-dot { display: flex; align-items: center; justify-content: center; width: 24px; height: 44px; padding: 0; background: none; border: none; cursor: pointer; }
+@media (min-width: 1024px) { .nav-dot { width: 44px; } }
+.nav-dot span { width: 6px; height: 6px; border-radius: 50%; background: var(--color-nav-rest); transition: width .3s, height .3s, background .3s; }
+@media (min-width: 1024px) { .nav-dot span { width: 12px; height: 12px; } }
+.nav-dot.active span { width: 12px; height: 12px; background: var(--dot-color, var(--color-yellow)); }
+@media (min-width: 1024px) { .nav-dot.active span { width: 20px; height: 20px; } }
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+}

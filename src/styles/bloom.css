@@ -1,0 +1,36 @@
+/* one spectrum-sweep radial gradient per section, anchored just off the left edge */
+.bloom {
+  position: absolute;
+  inset: -80px;
+  filter: blur(14px);
+  opacity: .85;
+  pointer-events: none;
+}
+
+.grain {
+  position: absolute;
+  inset: 0;
+  opacity: .22;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+  background-size: 220px 220px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch' result='t'/%3E%3CfeColorMatrix in='t' type='matrix' values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.7 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.bloom--hero { opacity: .85; background: radial-gradient(circle 1900px at -6px 305px, transparent 60.53%, #6B0F1A 64.91%, #E0222B 69.30%, #FF6A1F 73.68%, #FFC02B 78.07%, #FFF1CF 82.46%, #7FE3FF 86.84%, #2B6BFF 91.23%, #0A2A9E 95.61%, transparent 100%); }
+.bloom--s1 { background: radial-gradient(circle 1560px at -6px 780px, transparent 61.54%, #5A0C1E 66.03%, #C8142B 71.79%, #FF3B2B 77.56%, #FF8A2B 82.69%, #FFC27A 87.18%, #D4207E 91.67%, transparent 100%); }
+.bloom--s2 { background: radial-gradient(circle 1560px at -6px 330px, transparent 61.54%, #073D2A 66.03%, #0FA85A 71.79%, #19E65C 77.56%, #9BEF4A 82.69%, #E4F57A 87.18%, #12A8C8 91.67%, transparent 100%); }
+.bloom--s3 { background: radial-gradient(circle 1560px at -6px 880px, transparent 61.54%, #0A1450 66.03%, #1B3FD0 71.79%, #2B5BFF 77.56%, #2B9BFF 82.69%, #7FD8FF 87.18%, #6A4BFF 91.67%, transparent 100%); }
+.bloom--s4 { background: radial-gradient(circle 1560px at -6px 380px, transparent 61.54%, #3A0C5E 66.03%, #7B2BD6 71.79%, #D42BD6 77.56%, #FF2BB0 82.69%, #FF4A6A 87.18%, #FF8A4A 91.67%, transparent 100%); }
+.bloom--s5 { background: radial-gradient(circle 1560px at -6px 680px, transparent 61.54%, #063246 66.03%, #0A8CA8 71.79%, #2BDCFF 77.56%, #8FF0FF 82.69%, #BFEFFF 87.18%, #2B7BFF 91.67%, transparent 100%); }
+.bloom--s6 { background: radial-gradient(circle 1560px at -6px 580px, transparent 61.54%, #5A2406 66.03%, #C2540E 71.79%, #FF8A2B 77.56%, #FFB02B 82.69%, #FFD98A 87.18%, #FF4A3A 91.67%, transparent 100%); }
+
+@media (max-width: 640px) {
+  .bloom--hero { opacity: .42; background: radial-gradient(circle 513px at -6px 25%, transparent 60.53%, #6B0F1A 64.91%, #E0222B 69.30%, #FF6A1F 73.68%, #FFC02B 78.07%, #FFF1CF 82.46%, #7FE3FF 86.84%, #2B6BFF 91.23%, #0A2A9E 95.61%, transparent 100%); }
+  .bloom--s1 { opacity: .35; background: radial-gradient(circle 421px at -6px 70%, transparent 61.54%, #5A0C1E 66.03%, #C8142B 71.79%, #FF3B2B 77.56%, #FF8A2B 82.69%, #FFC27A 87.18%, #D4207E 91.67%, transparent 100%); }
+  .bloom--s2 { opacity: .35; background: radial-gradient(circle 421px at -6px 25%, transparent 61.54%, #073D2A 66.03%, #0FA85A 71.79%, #19E65C 77.56%, #9BEF4A 82.69%, #E4F57A 87.18%, #12A8C8 91.67%, transparent 100%); }
+  .bloom--s3 { opacity: .35; background: radial-gradient(circle 421px at -6px 80%, transparent 61.54%, #0A1450 66.03%, #1B3FD0 71.79%, #2B5BFF 77.56%, #2B9BFF 82.69%, #7FD8FF 87.18%, #6A4BFF 91.67%, transparent 100%); }
+  .bloom--s4 { opacity: .35; background: radial-gradient(circle 421px at -6px 30%, transparent 61.54%, #3A0C5E 66.03%, #7B2BD6 71.79%, #D42BD6 77.56%, #FF2BB0 82.69%, #FF4A6A 87.18%, #FF8A4A 91.67%, transparent 100%); }
+  .bloom--s5 { opacity: .35; background: radial-gradient(circle 421px at -6px 60%, transparent 61.54%, #063246 66.03%, #0A8CA8 71.79%, #2BDCFF 77.56%, #8FF0FF 82.69%, #BFEFFF 87.18%, #2B7BFF 91.67%, transparent 100%); }
+  .bloom--s6 { opacity: .35; background: radial-gradient(circle 421px at -6px 58%, transparent 61.54%, #5A2406 66.03%, #C2540E 71.79%, #FF8A2B 77.56%, #FFB02B 82.69%, #FFD98A 87.18%, #FF4A3A 91.67%, transparent 100%); }
+}
