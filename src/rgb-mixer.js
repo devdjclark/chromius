@@ -1,45 +1,65 @@
-// draggable rgb: GSAP Draggable clamped to the svg, plus arrow-key nudge
+// draggable rgb: GSAP Draggable clamped to the svg, plus arrow-key nudge; letters follow their circle
 import gsap from 'gsap';
 import { Draggable } from 'gsap/Draggable';
 
 gsap.registerPlugin(Draggable);
 
 const STEP = 12;
+// narrow screens crop the viewBox around the circles so they stay ~110px wide (DESIGN.md §6.1)
+const VIEWBOX_WIDE = '0 0 760 294';
+const VIEWBOX_NARROW = '222 0 320 294';
 
 export function initRgbMixer() {
   const svg = document.querySelector('#rgb-mixer');
   if (!svg) return;
 
-  const { width, height } = svg.viewBox.baseVal;
+  const circles = [...svg.querySelectorAll('.rgb-circle')];
+  const labels = [...svg.querySelectorAll('text[data-follow]')];
+  const narrow = window.matchMedia('(max-width: 640px)');
+  let draggables = [];
 
-  svg.querySelectorAll('.rgb-circle').forEach((circle) => {
+  function boundsFor(circle) {
+    const { x, y, width, height } = svg.viewBox.baseVal;
     const r = Number(circle.getAttribute('r'));
     const cx = Number(circle.getAttribute('cx'));
     const cy = Number(circle.getAttribute('cy'));
-    const bounds = {
-      minX: r - cx,
-      maxX: width - r - cx,
-      minY: r - cy,
-      maxY: height - r - cy,
-    };
+    return { minX: x + r - cx, maxX: x + width - r - cx, minY: y + r - cy, maxY: y + height - r - cy };
+  }
 
-    Draggable.create(circle, { type: 'x,y', bounds });
+  function moveTo(i, x, y) {
+    gsap.set([circles[i], labels[i]], { x, y });
+  }
 
+  function setup() {
+    draggables.forEach((d) => d.kill());
+    svg.setAttribute('viewBox', narrow.matches ? VIEWBOX_NARROW : VIEWBOX_WIDE);
+    circles.forEach((_, i) => moveTo(i, 0, 0));
+
+    draggables = circles.map((circle, i) =>
+      Draggable.create(circle, {
+        type: 'x,y',
+        bounds: boundsFor(circle),
+        onDrag() {
+          gsap.set(labels[i], { x: this.x, y: this.y });
+        },
+      })[0]
+    );
+  }
+
+  circles.forEach((circle, i) => {
     circle.addEventListener('keydown', (event) => {
-      const x = gsap.getProperty(circle, 'x');
-      const y = gsap.getProperty(circle, 'y');
-      let nextX = x;
-      let nextY = y;
-      if (event.key === 'ArrowLeft') nextX -= STEP;
-      else if (event.key === 'ArrowRight') nextX += STEP;
-      else if (event.key === 'ArrowUp') nextY -= STEP;
-      else if (event.key === 'ArrowDown') nextY += STEP;
-      else return;
+      const moves = { ArrowLeft: [-STEP, 0], ArrowRight: [STEP, 0], ArrowUp: [0, -STEP], ArrowDown: [0, STEP] };
+      const move = moves[event.key];
+      if (!move) return;
       event.preventDefault();
-      gsap.set(circle, {
-        x: Math.min(Math.max(nextX, bounds.minX), bounds.maxX),
-        y: Math.min(Math.max(nextY, bounds.minY), bounds.maxY),
-      });
+      const b = boundsFor(circle);
+      const x = Math.min(Math.max(gsap.getProperty(circle, 'x') + move[0], b.minX), b.maxX);
+      const y = Math.min(Math.max(gsap.getProperty(circle, 'y') + move[1], b.minY), b.maxY);
+      moveTo(i, x, y);
+      draggables[i].update();
     });
   });
+
+  narrow.addEventListener('change', setup);
+  setup();
 }

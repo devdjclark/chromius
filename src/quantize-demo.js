@@ -20,15 +20,14 @@ export function initQuantizeDemo() {
     const bits = Number(slider.value);
     value.textContent = bits;
     levelsStat.textContent = levelsForBits(bits);
-    bppStat.textContent = `${bitsPerPixel(bits)} / 24`;
+    bppStat.textContent = bitsPerPixel(bits);
 
     rows.forEach((row, i) => {
-      const [r, g, b] = SAMPLES[i];
-      const qr = quantize(r, bits);
-      const qg = quantize(g, bits);
-      const qb = quantize(b, bits);
-      row.querySelector('[data-swatch]').style.background = toHex6(qr, qg, qb);
-      row.querySelector('[data-out]').textContent = `${qr}, ${qg}, ${qb}`;
+      const out = SAMPLES[i].map((v) => quantize(v, bits));
+      row.querySelector('[data-swatch]').style.background = toHex6(...out);
+      row.querySelectorAll('[data-out]').forEach((cell, c) => {
+        cell.textContent = out[c];
+      });
     });
   }
 

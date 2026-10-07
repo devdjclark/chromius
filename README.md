@@ -46,4 +46,4 @@ npm test
 ## Other scripts
 
 - `npm run fetch:fonts` — download the self-hosted font files used by the site.
-- `npm run compress:images` — compress source images used by the site.
+- `npm run generate:graphs` — render the two S3 graphs (dark, 1440×660) to JPG + WebP in `public/images/` and print their sizes for the S6 table.

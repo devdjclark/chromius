@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Chromius — Digital Color Systems and Quantization</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='6' fill='%23FFD02B'/%3E%3C/svg%3E" />
   </head>
   <body>
     <nav class="nav" aria-label="Section navigation">
@@ -16,244 +17,317 @@
       <button class="nav-dot" data-target="s6" style="--dot-color:#FF8A2B" aria-label="06 Media Spec"><span></span></button>
     </nav>
 
-    <section id="hero" class="section section--hero">
-      <div class="bloom bloom--hero" aria-hidden="true"></div>
-      <div class="grain" aria-hidden="true"></div>
-      <main class="section-pad section-pad--hero">
-        <p class="mono-label">Digital Color Systems and Quantization</p>
-        <h1 class="h1-hero">Chromius</h1>
-        <p class="hero-overview">
-          Digital displays recreate the real world by translating continuous light into numerical Red, Green, and
-          Blue (RGB) values. Explore how color quantization reduces these colors to save file space without
-          sacrificing image quality.
-        </p>
-        <button id="sound-button" class="btn" aria-pressed="false">
-          <svg width="14" height="16" viewBox="0 0 14 16" aria-hidden="true"><path data-icon d="M2 1.5 L13 8 L2 14.5 Z" fill="currentColor"></path></svg>
-          <span data-label>PLAY SOUND</span>
-        </button>
-        <audio id="ambient-audio" src="/audio/ambient-loop.mp3" loop preload="none"></audio>
-      </main>
-    </section>
-
-    <section id="s1" class="section">
-      <div class="bloom bloom--s1" aria-hidden="true"></div>
-      <div class="grain" aria-hidden="true"></div>
-      <main class="section-pad">
-        <h2 class="h2">The RGB Model</h2>
-        <p class="intro">
-          Screens do not use physical ink; they produce color through additive mixing of light using clusters of
-          microscopic Red, Green, and Blue (RGB) sub-pixel LEDs. By adjusting the intensity of each primary light
-          channel from full darkness to full brightness, a screen can reproduce practically any color.
-        </p>
-        <div class="glass" style="max-width:820px;padding:28px">
-          <div class="well" style="min-height:294px">
-            <svg id="rgb-mixer" viewBox="0 0 760 294" class="w-full h-auto" style="isolation:isolate" role="group" aria-label="Drag the red, green and blue circles to mix color">
-              <circle class="rgb-circle" cx="382" cy="100" r="75" fill="#FF0000" style="mix-blend-mode:screen;touch-action:none" tabindex="0" role="slider" aria-label="Red light"></circle>
-              <text x="382" y="100" dy="8" text-anchor="middle" fill="#fff" font-size="22" font-weight="300" pointer-events="none">R</text>
-              <circle class="rgb-circle" cx="337" cy="178" r="75" fill="#00FF00" style="mix-blend-mode:screen;touch-action:none" tabindex="0" role="slider" aria-label="Green light"></circle>
-              <text x="337" y="178" dy="8" text-anchor="middle" fill="#fff" font-size="22" font-weight="300" pointer-events="none">G</text>
-              <circle class="rgb-circle" cx="427" cy="178" r="75" fill="#0000FF" style="mix-blend-mode:screen;touch-action:none" tabindex="0" role="slider" aria-label="Blue light"></circle>
-              <text x="427" y="178" dy="8" text-anchor="middle" fill="#fff" font-size="22" font-weight="300" pointer-events="none">B</text>
-            </svg>
-          </div>
-        </div>
-        <p class="body-text">To control these light intensities electronically, the computer must convert them into numbers.</p>
-      </main>
-    </section>
-
-    <section id="s2" class="section">
-      <div class="bloom bloom--s2" aria-hidden="true"></div>
-      <div class="grain" aria-hidden="true"></div>
-      <main class="section-pad">
-        <h2 class="h2">Storing Colors as Numbers</h2>
-        <p class="intro">
-          In modern digital media, full-color images use 24-bit color depth. Each pixel allocates 3 bytes (24
-          bits)—one dedicated byte (8 bits) to each RGB channel.
-        </p>
-        <div class="glass" style="max-width:820px;min-height:350px;padding:28px">
-          <div class="flex flex-col gap-9 md:flex-row md:items-center">
-            <div class="relative" style="width:180px;height:110px;isolation:isolate">
-              <div id="r-swatch" class="absolute rounded-full" style="width:110px;height:110px;left:0;mix-blend-mode:screen"></div>
-              <div id="g-swatch" class="absolute rounded-full" style="width:110px;height:110px;left:35px;mix-blend-mode:screen"></div>
-              <div id="b-swatch" class="absolute rounded-full" style="width:110px;height:110px;left:70px;mix-blend-mode:screen"></div>
-            </div>
-            <div class="flex flex-1 flex-col gap-6">
-              <label class="mono-label">RED <input id="r-slider" class="slider" type="range" min="0" max="255" value="43" style="--thumb-color:#FF6A6A" /></label>
-              <label class="mono-label">GREEN <input id="g-slider" class="slider" type="range" min="0" max="255" value="91" style="--thumb-color:#19E65C" /></label>
-              <label class="mono-label">BLUE <input id="b-slider" class="slider" type="range" min="0" max="255" value="255" style="--thumb-color:#7F9DFF" /></label>
-            </div>
-          </div>
-          <div class="well mt-9 grid grid-cols-3 gap-6" style="padding:20px">
-            <div>
-              <p class="mono-label" style="color:#FF6A6A">RED</p>
-              <p class="body-text" id="r-dec">43</p>
-              <p class="mono-label" id="r-hex">2B</p>
-              <p class="mono-label" id="r-bin">00101011</p>
-            </div>
-            <div>
-              <p class="mono-label" style="color:#19E65C">GREEN</p>
-              <p class="body-text" id="g-dec">91</p>
-              <p class="mono-label" id="g-hex">5B</p>
-              <p class="mono-label" id="g-bin">01011011</p>
-            </div>
-            <div>
-              <p class="mono-label" style="color:#7F9DFF">BLUE</p>
-              <p class="body-text" id="b-dec">255</p>
-              <p class="mono-label" id="b-hex">FF</p>
-              <p class="mono-label" id="b-bin">11111111</p>
-            </div>
-          </div>
-          <p class="mono-label mt-6">HEX <span id="hex6">#2B5BFF</span> — 8 + 8 + 8 = 24 BITS / 16,777,216 COLORS</p>
-        </div>
-        <p class="body-text">
-          While 16.7 million colors look smooth and lifelike, light in nature is infinite and unbroken. Turning
-          continuous light into numbers requires two distinct steps: sampling and quantization.
-        </p>
-      </main>
-    </section>
-
-    <section id="s3" class="section">
-      <div class="bloom bloom--s3" aria-hidden="true"></div>
-      <div class="grain" aria-hidden="true"></div>
-      <main class="section-pad">
-        <h2 class="h2">Digitization Concepts</h2>
-        <p class="intro">The process of converting continuous light into digital numbers involves two key steps: sampling and quantization.</p>
-        <div class="grid gap-6" style="grid-template-columns:repeat(auto-fit, minmax(min(320px, 100%), 1fr))">
-          <div class="glass" style="padding:20px">
-            <img src="/images/sampling-graph.jpg" alt="Graph showing a continuous signal sampled at discrete, evenly spaced points" width="1440" height="660" loading="lazy" style="aspect-ratio:24/11;object-fit:contain;width:100%" />
-            <h3 class="h3 mt-6">Sampling</h3>
-            <p class="body-text">
-              Divides continuous space into a grid of discrete pixels (e.g., 1920 × 1080 screen resolution). It
-              answers the question, "Where and how often do we measure?"
+    <main>
+      <section id="hero" class="section section--hero">
+        <div class="bloom bloom--hero" aria-hidden="true"></div>
+        <div class="grain" aria-hidden="true"></div>
+        <div class="section-pad section-pad--hero">
+          <p class="mono-label eyebrow">Digital Color Systems and Quantization</p>
+          <div class="hero-body">
+            <h1 class="h1-hero">Chromius</h1>
+            <p class="hero-overview">
+              Digital displays recreate the real world by translating continuous light into numerical Red, Green, and
+              Blue (RGB) values. Explore how color quantization reduces these colors to save file space without
+              sacrificing image quality.
             </p>
-          </div>
-          <div class="glass" style="padding:20px">
-            <img src="/images/quantization-graph.jpg" alt="Graph showing a continuous value snapped to the nearest of a fixed set of levels" width="1440" height="660" loading="lazy" style="aspect-ratio:24/11;object-fit:contain;width:100%" />
-            <h3 class="h3 mt-6">Quantization</h3>
-            <p class="body-text">
-              Maps infinite, continuous light values into a finite set of allowed digital numbers (0-255). It
-              answers the question, "What fixed value do we round each color to?"
-            </p>
+            <button id="sound-button" class="btn" type="button" aria-pressed="false">
+              <svg width="14" height="16" viewBox="0 0 14 16" aria-hidden="true"><path data-icon d="M2 1.5 L13 8 L2 14.5 Z" fill="currentColor"></path></svg>
+              <span data-label>Play sound</span>
+            </button>
+            <audio id="ambient-audio" src="/audio/ambient-loop.mp3" loop preload="none"></audio>
           </div>
         </div>
-        <p class="body-text">
-          Storing 24 bits for every pixel creates large files. To save bandwidth and storage, we use color
-          quantization to compress the color data.
-        </p>
-      </main>
-    </section>
+      </section>
 
-    <section id="s4" class="section">
-      <div class="bloom bloom--s4" aria-hidden="true"></div>
-      <div class="grain" aria-hidden="true"></div>
-      <main class="section-pad">
-        <h2 class="h2">Compression via Quantization</h2>
-        <p class="intro">
-          Color quantization reduces an image's palette from millions of colors down to a compact set while keeping
-          it visually recognizable, by grouping nearby shades into clusters and picking one representative color
-          for each.
-        </p>
-        <div class="glass" style="max-width:860px;padding:28px">
-          <label class="mono-label">BITS PER CHANNEL <span id="bits-value">4</span> <input id="bits-slider" class="slider" type="range" min="1" max="8" value="4" /></label>
-          <div class="flex gap-9 mt-6">
-            <p class="mono-label">LEVELS <span class="stat-number" id="levels-stat">16</span></p>
-            <p class="mono-label">BITS / PIXEL <span class="stat-number" id="bpp-stat">12 / 24</span></p>
+      <section id="s1" class="section" aria-labelledby="s1-title">
+        <div class="bloom bloom--s1" aria-hidden="true"></div>
+        <div class="grain" aria-hidden="true"></div>
+        <div class="section-pad">
+          <header class="section-head">
+            <h2 id="s1-title" class="h2">The RGB Model</h2>
+            <p class="intro">
+              Screens do not use physical ink; they produce color through additive mixing of light using clusters of
+              microscopic Red, Green, and Blue (RGB) sub-pixel LEDs. By adjusting the intensity of each primary light
+              channel from full darkness to full brightness, a screen can reproduce practically any color.
+            </p>
+          </header>
+          <div class="glass card card--pair">
+            <div class="well mixer-well">
+              <svg id="rgb-mixer" viewBox="0 0 760 294" role="group" aria-label="Drag the red, green and blue lights to mix color">
+                <circle class="rgb-circle" cx="382" cy="100" r="75" fill="#FF0000" tabindex="0" role="slider" aria-label="Red light"></circle>
+                <circle class="rgb-circle" cx="337" cy="178" r="75" fill="#00FF00" tabindex="0" role="slider" aria-label="Green light"></circle>
+                <circle class="rgb-circle" cx="427" cy="178" r="75" fill="#0000FF" tabindex="0" role="slider" aria-label="Blue light"></circle>
+                <text data-follow="0" x="382" y="100" dy="8" aria-hidden="true">R</text>
+                <text data-follow="1" x="337" y="178" dy="8" aria-hidden="true">G</text>
+                <text data-follow="2" x="427" y="178" dy="8" aria-hidden="true">B</text>
+              </svg>
+            </div>
           </div>
-          <div class="well mt-6" style="padding:16px">
-            <table class="w-full body-text">
+          <p class="outro">To control these light intensities electronically, the computer must convert them into numbers.</p>
+        </div>
+      </section>
+
+      <section id="s2" class="section" aria-labelledby="s2-title">
+        <div class="bloom bloom--s2" aria-hidden="true"></div>
+        <div class="grain" aria-hidden="true"></div>
+        <div class="section-pad">
+          <header class="section-head">
+            <h2 id="s2-title" class="h2">Storing Colors as Numbers</h2>
+            <p class="intro">
+              In modern digital media, full-color images use 24-bit color depth. Each pixel allocates 3 bytes (24
+              bits)—one dedicated byte (8 bits) to each RGB channel.
+            </p>
+            <ul class="facts">
+              <li>Each channel has 2<sup>8</sup> = 256 discrete intensity levels (0 to 255).</li>
+              <li>Multiplying the channels (256 × 256 × 256) produces 16,777,216 distinct color combinations.</li>
+              <li>These numerical values are represented on the web as Hex color codes (e.g., #D18602 or #339900).</li>
+            </ul>
+          </header>
+          <div class="glass card card--pair numbers-card">
+            <div class="swatch-venn" aria-hidden="true">
+              <div id="r-swatch" class="venn-circle venn-r"></div>
+              <div id="g-swatch" class="venn-circle venn-g"></div>
+              <div id="b-swatch" class="venn-circle venn-b"></div>
+              <span class="venn-label venn-label--r">R</span>
+              <span class="venn-label venn-label--g">G</span>
+              <span class="venn-label venn-label--b">B</span>
+            </div>
+            <div class="numbers-controls">
+              <div class="slider-row">
+                <label class="mono-label" for="r-slider">Red</label><output class="mono-value" for="r-slider" id="r-out">43</output>
+                <input id="r-slider" class="slider" type="range" min="0" max="255" value="43" style="--thumb-color:#FF6A6A" />
+              </div>
+              <div class="slider-row">
+                <label class="mono-label" for="g-slider">Green</label><output class="mono-value" for="g-slider" id="g-out">91</output>
+                <input id="g-slider" class="slider" type="range" min="0" max="255" value="91" style="--thumb-color:#19E65C" />
+              </div>
+              <div class="slider-row">
+                <label class="mono-label" for="b-slider">Blue</label><output class="mono-value" for="b-slider" id="b-out">255</output>
+                <input id="b-slider" class="slider" type="range" min="0" max="255" value="255" style="--thumb-color:#7F9DFF" />
+              </div>
+              <div class="well readout" aria-live="polite">
+                <div class="readout-cols">
+                  <div>
+                    <p class="mono-label" style="color:#FF6A6A">Red</p>
+                    <p class="stat-number" id="r-dec">43</p>
+                    <p class="mono" id="r-hex">0x2B</p>
+                    <p class="mono" id="r-bin" style="color:#FF6A6A">00101011</p>
+                  </div>
+                  <div>
+                    <p class="mono-label" style="color:#19E65C">Green</p>
+                    <p class="stat-number" id="g-dec">91</p>
+                    <p class="mono" id="g-hex">0x5B</p>
+                    <p class="mono" id="g-bin" style="color:#19E65C">01011011</p>
+                  </div>
+                  <div>
+                    <p class="mono-label" style="color:#7F9DFF">Blue</p>
+                    <p class="stat-number" id="b-dec">255</p>
+                    <p class="mono" id="b-hex">0xFF</p>
+                    <p class="mono" id="b-bin" style="color:#7F9DFF">11111111</p>
+                  </div>
+                </div>
+                <div class="readout-foot">
+                  <span class="mono hex6" id="hex6">#2B5BFF</span>
+                  <span class="mono-label">8 + 8 + 8 = 24 bits / 16,777,216 colors</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <p class="outro">
+            While 16.7 million colors look smooth and lifelike, light in nature is infinite and unbroken. Turning
+            continuous light into numbers requires two distinct steps: sampling and quantization.
+          </p>
+        </div>
+      </section>
+
+      <section id="s3" class="section" aria-labelledby="s3-title">
+        <div class="bloom bloom--s3" aria-hidden="true"></div>
+        <div class="grain" aria-hidden="true"></div>
+        <div class="section-pad">
+          <header class="section-head">
+            <h2 id="s3-title" class="h2">Digitization Concepts</h2>
+            <p class="intro">The process of converting continuous light into digital numbers involves two key steps: sampling and quantization.</p>
+          </header>
+          <div class="concept-grid">
+            <article class="glass concept-card">
+              <picture>
+                <source srcset="/images/sampling-graph.webp" type="image/webp" />
+                <img class="graph" src="/images/sampling-graph.jpg" alt="A continuous sine wave measured at 17 evenly spaced sample points, each shown as a dot on a vertical stem" width="1440" height="660" loading="lazy" />
+              </picture>
+              <h3 class="h3">Sampling</h3>
+              <p class="card-text">
+                Divides continuous space into a grid of discrete pixels (e.g., 1920 × 1080 screen resolution). It
+                answers the question, "Where and how often do we measure?"
+              </p>
+            </article>
+            <article class="glass concept-card">
+              <picture>
+                <source srcset="/images/quantization-graph.webp" type="image/webp" />
+                <img class="graph" src="/images/quantization-graph.jpg" alt="A continuous sine wave with a staircase line that snaps every value to the nearest of 9 fixed levels" width="1440" height="660" loading="lazy" />
+              </picture>
+              <h3 class="h3">Quantization</h3>
+              <p class="card-text">
+                Maps infinite, continuous light values into a finite set of allowed digital numbers (0-255). It
+                answers the question, "What fixed value do we round each color to?"
+              </p>
+            </article>
+          </div>
+          <p class="outro">
+            Storing 24 bits for every pixel creates large files. To save bandwidth and storage, we use color
+            quantization to compress the color data.
+          </p>
+        </div>
+      </section>
+
+      <section id="s4" class="section" aria-labelledby="s4-title">
+        <div class="bloom bloom--s4" aria-hidden="true"></div>
+        <div class="grain" aria-hidden="true"></div>
+        <div class="section-pad">
+          <header class="section-head">
+            <h2 id="s4-title" class="h2">Compression via Quantization</h2>
+            <p class="intro">
+              Color Quantization is the process of reducing an image’s palette from millions of colors down to a
+              compact set (typically 8-bit / 256 colors) while keeping it visually recognizable. The computer plots
+              every pixel's (R,G,B) value into a 3D coordinate space and groups nearby shades into clusters, picking a
+              single representative "centroid" color for each cluster.
+            </p>
+            <p class="intro">Instead of saving full 24-bit RGB values inside every pixel, the image saves:</p>
+            <ul class="facts">
+              <li>A master palette table (LUT) holding only the 256 selected colors.</li>
+              <li>The pixel data itself, where each pixel only needs a single byte pointing to an index number (0-255) in the table.</li>
+            </ul>
+          </header>
+          <div class="glass card lut-card">
+            <div class="lut-controls">
+              <div class="slider-row">
+                <label class="mono-label" for="bits-slider">Bits per channel</label><output class="mono-value" for="bits-slider" id="bits-value">4</output>
+                <input id="bits-slider" class="slider" type="range" min="1" max="8" value="4" />
+              </div>
+              <div class="stats">
+                <div>
+                  <p class="mono-label">Levels</p>
+                  <p class="stat-number" id="levels-stat">16</p>
+                </div>
+                <div>
+                  <p class="mono-label">Bits / pixel</p>
+                  <p class="stat-number"><span id="bpp-stat">12</span><span class="stat-of"> / 24</span></p>
+                </div>
+              </div>
+            </div>
+            <div class="well lut-well">
+              <table class="lut">
+                <caption class="sr-only">Three sample colors and the values the look-up table maps them to</caption>
+                <thead>
+                  <tr>
+                    <th scope="colgroup" colspan="4" class="mono-label">Original <span class="lut-rgb">R G B</span></th>
+                    <td aria-hidden="true"></td>
+                    <th scope="colgroup" colspan="4" class="mono-label">LUT output</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr data-row>
+                    <td><span class="dot" style="background:#FF4040"></span></td><td>255</td><td>64</td><td>64</td>
+                    <td class="arrow" aria-label="maps to">→</td>
+                    <td><span class="dot" data-swatch></span></td><td data-out></td><td data-out></td><td data-out></td>
+                  </tr>
+                  <tr data-row>
+                    <td><span class="dot" style="background:#19E65C"></span></td><td>25</td><td>230</td><td>92</td>
+                    <td class="arrow" aria-label="maps to">→</td>
+                    <td><span class="dot" data-swatch></span></td><td data-out></td><td data-out></td><td data-out></td>
+                  </tr>
+                  <tr data-row>
+                    <td><span class="dot" style="background:#2B5BFF"></span></td><td>43</td><td>91</td><td>255</td>
+                    <td class="arrow" aria-label="maps to">→</td>
+                    <td><span class="dot" data-swatch></span></td><td data-out></td><td data-out></td><td data-out></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <p class="outro">While this dramatically cuts file size, rounding colors to a smaller palette has visual consequences.</p>
+        </div>
+      </section>
+
+      <section id="s5" class="section" aria-labelledby="s5-title">
+        <div class="bloom bloom--s5" aria-hidden="true"></div>
+        <div class="grain" aria-hidden="true"></div>
+        <div class="section-pad">
+          <header class="section-head">
+            <h2 id="s5-title" class="h2">Quantization Artifacts</h2>
+            <p class="intro">
+              When there are not enough discrete color levels to recreate subtle tone shifts (like a sky or soft
+              shadow), smooth transitions collapse into visible, step-like stripes known as <i>color banding</i>.
+            </p>
+          </header>
+          <div class="glass card banding-card">
+            <div id="banding-strip" class="banding-strip">
+              <div class="banding-smooth"></div>
+              <div id="banded-layer" class="banding-layer"></div>
+              <div id="compare-divider" class="compare-divider"></div>
+              <span class="pill pill--left">Quantized</span>
+              <span class="pill pill--right">24-bit</span>
+            </div>
+            <h3 class="h3">Color banding</h3>
+            <p class="card-text">Drag to compare the quantized gradient with the smooth original, and change the number of levels.</p>
+            <div class="banding-controls">
+              <div class="slider-row">
+                <label class="mono-label" for="compare-slider">Compare</label><output class="mono-value" for="compare-slider" id="compare-value">50%</output>
+                <input id="compare-slider" class="slider" type="range" min="0" max="100" value="50" />
+              </div>
+              <div class="slider-row">
+                <label class="mono-label" for="levels-slider">Levels</label><output class="mono-value" for="levels-slider" id="levels-label">8 / 3 bits</output>
+                <input id="levels-slider" class="slider" type="range" min="2" max="4" value="3" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="s6" class="section" aria-labelledby="s6-title">
+        <div class="bloom bloom--s6" aria-hidden="true"></div>
+        <div class="grain" aria-hidden="true"></div>
+        <div class="section-pad section-pad--spec">
+          <h2 id="s6-title" class="h2">Technical Media Spec</h2>
+          <div class="glass spec-card">
+            <table class="spec-table">
+              <caption class="sr-only">Technical media spec for assets used on this page</caption>
               <thead>
-                <tr><th class="mono-label text-left">ORIGINAL</th><th class="mono-label text-left">LUT OUTPUT</th></tr>
+                <tr>
+                  <th scope="col" class="mono-label">Asset name &amp; file format</th>
+                  <th scope="col" class="mono-label">Original size → compressed</th>
+                  <th scope="col" class="mono-label">Color depth / quantization</th>
+                  <th scope="col" class="mono-label">Compression algorithm</th>
+                </tr>
               </thead>
               <tbody>
-                <tr data-row>
-                  <td><span style="display:inline-block;width:16px;height:16px;border-radius:4px;background:#FF4040"></span> 255, 64, 64</td>
-                  <td><span data-swatch style="display:inline-block;width:16px;height:16px;border-radius:4px"></span> <span data-out></span></td>
+                <tr>
+                  <td><span class="asset-name">sampling-graph.jpg</span><span class="asset-meta">JPG, 1440 × 660</span></td>
+                  <td data-label="Size"><span class="mono">2.9 MB → 20.9 KB</span><span class="smaller">99.2% smaller</span></td>
+                  <td data-label="Color depth">8-bit per channel, RGB</td>
+                  <td data-label="Algorithm">RLE + Variable Length (Huffman)</td>
                 </tr>
-                <tr data-row>
-                  <td><span style="display:inline-block;width:16px;height:16px;border-radius:4px;background:#19E65C"></span> 25, 230, 92</td>
-                  <td><span data-swatch style="display:inline-block;width:16px;height:16px;border-radius:4px"></span> <span data-out></span></td>
+                <tr>
+                  <td><span class="asset-name">quantization-graph.jpg</span><span class="asset-meta">JPG, 1440 × 660</span></td>
+                  <td data-label="Size"><span class="mono">2.9 MB → 28.8 KB</span><span class="smaller">99.0% smaller</span></td>
+                  <td data-label="Color depth">8-bit per channel, RGB</td>
+                  <td data-label="Algorithm">RLE + Variable Length (Huffman)</td>
                 </tr>
-                <tr data-row>
-                  <td><span style="display:inline-block;width:16px;height:16px;border-radius:4px;background:#2B5BFF"></span> 43, 91, 255</td>
-                  <td><span data-swatch style="display:inline-block;width:16px;height:16px;border-radius:4px"></span> <span data-out></span></td>
+                <tr>
+                  <td><span class="asset-name">ambient-loop.mp3</span><span class="asset-meta">MP3, 128 kbps, 30 s</span></td>
+                  <td data-label="Size"><span class="mono">5.3 MB → 480 KB</span><span class="smaller">90.9% smaller</span></td>
+                  <td data-label="Color depth">16-bit samples at 44.1 kHz</td>
+                  <td data-label="Algorithm">Variable Length (Huffman)</td>
                 </tr>
               </tbody>
             </table>
           </div>
+          <footer class="site-footer mono-label">
+            <span>© 2026 University of Asia and the Pacific</span>
+            <span>Chromius</span>
+          </footer>
         </div>
-        <p class="body-text">While this dramatically cuts file size, rounding colors to a smaller palette has visual consequences.</p>
-      </main>
-    </section>
-
-    <section id="s5" class="section">
-      <div class="bloom bloom--s5" aria-hidden="true"></div>
-      <div class="grain" aria-hidden="true"></div>
-      <main class="section-pad">
-        <h2 class="h2">Quantization Artifacts</h2>
-        <p class="intro">
-          When there are not enough discrete color levels to recreate subtle tone shifts, smooth transitions
-          collapse into visible, step-like stripes known as color banding.
-        </p>
-        <div class="glass" style="max-width:820px;padding:28px">
-          <div class="relative" style="height:180px;isolation:isolate">
-            <div class="absolute inset-0" style="background:linear-gradient(to right, black, red)"></div>
-            <div id="banded-layer" class="absolute inset-0"></div>
-            <div id="compare-divider" class="absolute" style="top:0;bottom:0;left:50%;width:2px;background:rgba(255,255,255,.8)"></div>
-            <span class="mono-label absolute" style="top:8px;left:8px">QUANTIZED</span>
-            <span class="mono-label absolute" style="top:8px;right:8px">24-BIT</span>
-          </div>
-          <h3 class="h3 mt-6">Color banding</h3>
-          <p class="body-text">Drag to compare the original gradient against a reduced color palette.</p>
-          <label class="mono-label mt-6">COMPARE <input id="compare-slider" class="slider" type="range" min="0" max="100" value="50" /></label>
-          <label class="mono-label">LEVELS <span id="levels-label">8 / 3 BITS</span> <input id="levels-slider" class="slider" type="range" min="2" max="4" value="3" /></label>
-        </div>
-      </main>
-    </section>
-
-    <section id="s6" class="section">
-      <div class="bloom bloom--s6" aria-hidden="true"></div>
-      <div class="grain" aria-hidden="true"></div>
-      <main class="section-pad">
-        <h2 class="h2">Technical Media Spec</h2>
-        <div class="glass" style="max-width:900px;padding:20px">
-          <table class="w-full body-text spec-table">
-            <caption class="sr-only">Technical media spec for assets used on this page</caption>
-            <thead>
-              <tr>
-                <th scope="col" class="mono-label text-left">ASSET NAME & FILE FORMAT</th>
-                <th scope="col" class="mono-label text-left">ORIGINAL SIZE → COMPRESSED</th>
-                <th scope="col" class="mono-label text-left">COLOR DEPTH / QUANTIZATION</th>
-                <th scope="col" class="mono-label text-left">COMPRESSION ALGORITHM</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>sampling-graph.jpg<br /><span class="mono-label">JPG, 1440 × 660</span></td>
-                <td>2.9 MB → 22.4 KB<br /><span class="mono-label" style="color:var(--color-orange)">99.2% SMALLER</span></td>
-                <td>8-bit per channel, RGB</td>
-                <td>RLE + Variable Length (Huffman)</td>
-              </tr>
-              <tr>
-                <td>quantization-graph.jpg<br /><span class="mono-label">JPG, 1440 × 660</span></td>
-                <td>2.9 MB → 15.4 KB<br /><span class="mono-label" style="color:var(--color-orange)">99.4% SMALLER</span></td>
-                <td>8-bit per channel, RGB</td>
-                <td>RLE + Variable Length (Huffman)</td>
-              </tr>
-              <tr>
-                <td>ambient-loop.mp3<br /><span class="mono-label">MP3, 128 kbps, 30 s</span></td>
-                <td>5.3 MB → 480 KB<br /><span class="mono-label" style="color:var(--color-orange)">90.9% SMALLER</span></td>
-                <td>16-bit samples at 44.1 kHz</td>
-                <td>Variable Length (Huffman)</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <p class="mono-label flex justify-between mt-9">
-          <span>© 2026 UNIVERSITY OF ASIA AND THE PACIFIC</span>
-          <span>CHROMIUS</span>
-        </p>
-      </main>
-    </section>
+      </section>
+    </main>
 
     <script type="module" src="/src/main.js"></script>
   </body>

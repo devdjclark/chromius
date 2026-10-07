@@ -9,7 +9,7 @@
     "preview": "vite preview",
     "test": "vitest run",
     "fetch:fonts": "node scripts/fetch-fonts.mjs",
-    "compress:images": "node scripts/compress-images.mjs"
+    "generate:graphs": "node scripts/generate-graphs.mjs"
   },
   "dependencies": {
     "gsap": "^3.15.0"

@@ -20,7 +20,7 @@ export function initAudioButton() {
     }
     const next = !playing;
     button.setAttribute('aria-pressed', String(next));
-    label.textContent = next ? 'PAUSE SOUND' : 'PLAY SOUND';
+    label.textContent = next ? 'Pause sound' : 'Play sound';
     icon.setAttribute(
       'd',
       next ? 'M2.5 1.5h3v13h-3z M8.5 1.5h3v13h-3z' : 'M2 1.5 L13 8 L2 14.5 Z'
