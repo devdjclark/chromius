@@ -18,7 +18,7 @@ export function initNav() {
         dots.forEach((dot) => dot.classList.toggle('active', dot.dataset.target === entry.target.id));
       });
     },
-    { threshold: 0.5 }
+    { threshold: 0, rootMargin: '-50% 0px -50% 0px' }
   );
 
   SECTION_IDS.forEach((id) => {

@@ -1,4 +1,8 @@
 {
+  "name": "chromius-site",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -8,12 +12,13 @@
     "compress:images": "node scripts/compress-images.mjs"
   },
   "dependencies": {
-    "@tailwindcss/vite": "^4.3.3",
-    "gsap": "^3.15.0",
-    "tailwindcss": "^4.3.3"
+    "gsap": "^3.15.0"
   },
   "devDependencies": {
+    "@tailwindcss/vite": "^4.3.3",
     "sharp": "^0.35.5",
+    "tailwindcss": "^4.3.3",
+    "vite": "^8.3.3",
     "vitest": "^5.0.3"
   }
 }
