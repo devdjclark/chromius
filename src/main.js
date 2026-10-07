@@ -1,4 +1,6 @@
 import './styles/main.css';
+import { initSmoothScroll } from './smooth-scroll.js';
+import { initBloom } from './bloom.js';
 import { initNav } from './nav.js';
 import { initRgbMixer } from './rgb-mixer.js';
 import { initColorSliders } from './color-sliders.js';
@@ -7,6 +9,8 @@ import { initBandingDemo } from './banding-demo.js';
 import { initAudioButton } from './audio.js';
 import { initMotion } from './motion.js';
 
+initSmoothScroll();
+initBloom();
 initNav();
 initRgbMixer();
 initColorSliders();

@@ -1,4 +1,4 @@
-// scroll motion: fade sections up once on entry, slow bloom drift; both off if reduced-motion is set
+// scroll motion: fade section content up once on entry; off if reduced-motion is set
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -17,9 +17,5 @@ export function initMotion() {
       stagger: 0.1,
       scrollTrigger: { trigger: main, start: 'top 80%', once: true },
     });
-  });
-
-  gsap.utils.toArray('.bloom').forEach((bloom) => {
-    gsap.to(bloom, { scale: 1.03, duration: 20, yoyo: true, repeat: -1, ease: 'sine.inOut' });
   });
 }

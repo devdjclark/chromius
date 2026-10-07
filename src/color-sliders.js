@@ -1,5 +1,6 @@
-// storing colors as numbers: sliders drive swatches + the dec/hex/binary readout
-import { toHexPair, toBinary8, toHex6 } from './color-math.js';
+// storing colors as numbers: sliders drive the channel lights, the dec/binary values
+// beside each slider, and the mixed swatch + hex code
+import { toBinary8, toHex6 } from './color-math.js';
 
 const CHANNELS = [
   { key: 'r', rgb: (v) => `rgb(${v},0,0)` },
@@ -11,27 +12,25 @@ export function initColorSliders() {
   const channels = CHANNELS.map((c) => ({
     ...c,
     slider: document.querySelector(`#${c.key}-slider`),
-    out: document.querySelector(`#${c.key}-out`),
     swatch: document.querySelector(`#${c.key}-swatch`),
     dec: document.querySelector(`#${c.key}-dec`),
-    hex: document.querySelector(`#${c.key}-hex`),
     bin: document.querySelector(`#${c.key}-bin`),
   }));
   if (channels.some((c) => !c.slider)) return;
 
+  const mix = document.querySelector('#mix-swatch');
   const hex6 = document.querySelector('#hex6');
 
   function render() {
     const values = channels.map((c) => Number(c.slider.value));
     channels.forEach((c, i) => {
-      const v = values[i];
-      c.out.textContent = v;
-      c.swatch.style.background = c.rgb(v);
-      c.dec.textContent = v;
-      c.hex.textContent = `0x${toHexPair(v)}`;
-      c.bin.textContent = toBinary8(v);
+      c.swatch.style.background = c.rgb(values[i]);
+      c.dec.textContent = values[i];
+      c.bin.textContent = toBinary8(values[i]);
     });
-    hex6.textContent = toHex6(...values);
+    const hex = toHex6(...values);
+    mix.style.background = hex;
+    hex6.textContent = hex;
   }
 
   channels.forEach((c) => c.slider.addEventListener('input', render));

@@ -7,6 +7,8 @@
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='6' fill='%23FFD02B'/%3E%3C/svg%3E" />
   </head>
   <body>
+    <div class="bloom" aria-hidden="true"></div>
+    <div class="grain" aria-hidden="true"></div>
     <nav class="nav" aria-label="Section navigation">
       <button class="nav-dot active" data-target="hero" style="--dot-color:#FFD02B" aria-label="00 Intro"><span></span></button>
       <button class="nav-dot" data-target="s1" style="--dot-color:#FF2B2B" aria-label="01 RGB Model"><span></span></button>
@@ -19,8 +21,6 @@
 
     <main>
       <section id="hero" class="section section--hero">
-        <div class="bloom bloom--hero" aria-hidden="true"></div>
-        <div class="grain" aria-hidden="true"></div>
         <div class="section-pad section-pad--hero">
           <p class="mono-label eyebrow">Digital Color Systems and Quantization</p>
           <div class="hero-body">
@@ -40,8 +40,6 @@
       </section>
 
       <section id="s1" class="section" aria-labelledby="s1-title">
-        <div class="bloom bloom--s1" aria-hidden="true"></div>
-        <div class="grain" aria-hidden="true"></div>
         <div class="section-pad">
           <header class="section-head">
             <h2 id="s1-title" class="h2">The RGB Model</h2>
@@ -51,15 +49,15 @@
               channel from full darkness to full brightness, a screen can reproduce practically any color.
             </p>
           </header>
-          <div class="glass card card--pair">
+          <div class="glass card--pair mixer-card">
             <div class="well mixer-well">
-              <svg id="rgb-mixer" viewBox="0 0 760 294" role="group" aria-label="Drag the red, green and blue lights to mix color">
-                <circle class="rgb-circle" cx="382" cy="100" r="75" fill="#FF0000" tabindex="0" role="slider" aria-label="Red light"></circle>
-                <circle class="rgb-circle" cx="337" cy="178" r="75" fill="#00FF00" tabindex="0" role="slider" aria-label="Green light"></circle>
-                <circle class="rgb-circle" cx="427" cy="178" r="75" fill="#0000FF" tabindex="0" role="slider" aria-label="Blue light"></circle>
-                <text data-follow="0" x="382" y="100" dy="8" aria-hidden="true">R</text>
-                <text data-follow="1" x="337" y="178" dy="8" aria-hidden="true">G</text>
-                <text data-follow="2" x="427" y="178" dy="8" aria-hidden="true">B</text>
+              <svg id="rgb-mixer" viewBox="0 0 760 244" role="group" aria-label="Drag the red, green and blue lights to mix color">
+                <circle class="rgb-circle" cx="380" cy="90" r="62" fill="#FF0000" tabindex="0" role="slider" aria-label="Red light"></circle>
+                <circle class="rgb-circle" cx="343" cy="154" r="62" fill="#00FF00" tabindex="0" role="slider" aria-label="Green light"></circle>
+                <circle class="rgb-circle" cx="417" cy="154" r="62" fill="#0000FF" tabindex="0" role="slider" aria-label="Blue light"></circle>
+                <text data-follow="0" x="380" y="90" dy="7" aria-hidden="true">R</text>
+                <text data-follow="1" x="343" y="154" dy="7" aria-hidden="true">G</text>
+                <text data-follow="2" x="417" y="154" dy="7" aria-hidden="true">B</text>
               </svg>
             </div>
           </div>
@@ -68,8 +66,6 @@
       </section>
 
       <section id="s2" class="section" aria-labelledby="s2-title">
-        <div class="bloom bloom--s2" aria-hidden="true"></div>
-        <div class="grain" aria-hidden="true"></div>
         <div class="section-pad">
           <header class="section-head">
             <h2 id="s2-title" class="h2">Storing Colors as Numbers</h2>
@@ -83,7 +79,7 @@
               <li>These numerical values are represented on the web as Hex color codes (e.g., #D18602 or #339900).</li>
             </ul>
           </header>
-          <div class="glass card card--pair numbers-card">
+          <div class="glass card--pair numbers-card">
             <div class="swatch-venn" aria-hidden="true">
               <div id="r-swatch" class="venn-circle venn-r"></div>
               <div id="g-swatch" class="venn-circle venn-g"></div>
@@ -94,42 +90,23 @@
             </div>
             <div class="numbers-controls">
               <div class="slider-row">
-                <label class="mono-label" for="r-slider">Red</label><output class="mono-value" for="r-slider" id="r-out">43</output>
+                <label class="mono-label" for="r-slider">Red</label>
+                <output class="mono-value channel-out" for="r-slider"><span id="r-dec">43</span><span id="r-bin">00101011</span></output>
                 <input id="r-slider" class="slider" type="range" min="0" max="255" value="43" style="--thumb-color:#FF6A6A" />
               </div>
               <div class="slider-row">
-                <label class="mono-label" for="g-slider">Green</label><output class="mono-value" for="g-slider" id="g-out">91</output>
+                <label class="mono-label" for="g-slider">Green</label>
+                <output class="mono-value channel-out" for="g-slider"><span id="g-dec">91</span><span id="g-bin">01011011</span></output>
                 <input id="g-slider" class="slider" type="range" min="0" max="255" value="91" style="--thumb-color:#19E65C" />
               </div>
               <div class="slider-row">
-                <label class="mono-label" for="b-slider">Blue</label><output class="mono-value" for="b-slider" id="b-out">255</output>
+                <label class="mono-label" for="b-slider">Blue</label>
+                <output class="mono-value channel-out" for="b-slider"><span id="b-dec">255</span><span id="b-bin">11111111</span></output>
                 <input id="b-slider" class="slider" type="range" min="0" max="255" value="255" style="--thumb-color:#7F9DFF" />
               </div>
-              <div class="well readout" aria-live="polite">
-                <div class="readout-cols">
-                  <div>
-                    <p class="mono-label" style="color:#FF6A6A">Red</p>
-                    <p class="stat-number" id="r-dec">43</p>
-                    <p class="mono" id="r-hex">0x2B</p>
-                    <p class="mono" id="r-bin" style="color:#FF6A6A">00101011</p>
-                  </div>
-                  <div>
-                    <p class="mono-label" style="color:#19E65C">Green</p>
-                    <p class="stat-number" id="g-dec">91</p>
-                    <p class="mono" id="g-hex">0x5B</p>
-                    <p class="mono" id="g-bin" style="color:#19E65C">01011011</p>
-                  </div>
-                  <div>
-                    <p class="mono-label" style="color:#7F9DFF">Blue</p>
-                    <p class="stat-number" id="b-dec">255</p>
-                    <p class="mono" id="b-hex">0xFF</p>
-                    <p class="mono" id="b-bin" style="color:#7F9DFF">11111111</p>
-                  </div>
-                </div>
-                <div class="readout-foot">
-                  <span class="mono hex6" id="hex6">#2B5BFF</span>
-                  <span class="mono-label">8 + 8 + 8 = 24 bits / 16,777,216 colors</span>
-                </div>
+              <div class="mix-result" aria-live="polite">
+                <span id="mix-swatch" class="mix-swatch" aria-hidden="true"></span>
+                <span class="mono hex6" id="hex6">#2B5BFF</span>
               </div>
             </div>
           </div>
@@ -141,8 +118,6 @@
       </section>
 
       <section id="s3" class="section" aria-labelledby="s3-title">
-        <div class="bloom bloom--s3" aria-hidden="true"></div>
-        <div class="grain" aria-hidden="true"></div>
         <div class="section-pad">
           <header class="section-head">
             <h2 id="s3-title" class="h2">Digitization Concepts</h2>
@@ -180,8 +155,6 @@
       </section>
 
       <section id="s4" class="section" aria-labelledby="s4-title">
-        <div class="bloom bloom--s4" aria-hidden="true"></div>
-        <div class="grain" aria-hidden="true"></div>
         <div class="section-pad">
           <header class="section-head">
             <h2 id="s4-title" class="h2">Compression via Quantization</h2>
@@ -249,8 +222,6 @@
       </section>
 
       <section id="s5" class="section" aria-labelledby="s5-title">
-        <div class="bloom bloom--s5" aria-hidden="true"></div>
-        <div class="grain" aria-hidden="true"></div>
         <div class="section-pad">
           <header class="section-head">
             <h2 id="s5-title" class="h2">Quantization Artifacts</h2>
@@ -284,8 +255,6 @@
       </section>
 
       <section id="s6" class="section" aria-labelledby="s6-title">
-        <div class="bloom bloom--s6" aria-hidden="true"></div>
-        <div class="grain" aria-hidden="true"></div>
         <div class="section-pad section-pad--spec">
           <h2 id="s6-title" class="h2">Technical Media Spec</h2>
           <div class="glass spec-card">
@@ -323,7 +292,6 @@
           </div>
           <footer class="site-footer mono-label">
             <span>© 2026 University of Asia and the Pacific</span>
-            <span>Chromius</span>
           </footer>
         </div>
       </section>

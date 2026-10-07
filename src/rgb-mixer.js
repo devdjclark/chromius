@@ -6,8 +6,8 @@ gsap.registerPlugin(Draggable);
 
 const STEP = 12;
 // narrow screens crop the viewBox around the circles so they stay ~110px wide (DESIGN.md §6.1)
-const VIEWBOX_WIDE = '0 0 760 294';
-const VIEWBOX_NARROW = '222 0 320 294';
+const VIEWBOX_WIDE = '0 0 760 244';
+const VIEWBOX_NARROW = '230 0 300 244';
 
 export function initRgbMixer() {
   const svg = document.querySelector('#rgb-mixer');

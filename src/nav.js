@@ -1,4 +1,6 @@
 // dot-nav: click to scroll, highlight whichever section is in view
+import { scrollToElement } from './smooth-scroll.js';
+
 const SECTION_IDS = ['hero', 's1', 's2', 's3', 's4', 's5', 's6'];
 
 export function initNav() {
@@ -7,7 +9,8 @@ export function initNav() {
 
   dots.forEach((dot) => {
     dot.addEventListener('click', () => {
-      document.querySelector(`#${dot.dataset.target}`)?.scrollIntoView({ behavior: 'smooth' });
+      const target = document.querySelector(`#${dot.dataset.target}`);
+      if (target) scrollToElement(target);
     });
   });
 

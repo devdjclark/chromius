@@ -40,8 +40,8 @@ body {
 
 /* ---------- page frame ---------- */
 
-/* one full-viewport, full-black section per page block */
-.section { position: relative; overflow: hidden; background: #000; min-height: 100vh; display: flex; flex-direction: column; }
+/* one full-viewport section per page block; transparent so the fixed band (bloom.css) shows through */
+.section { position: relative; z-index: 1; overflow: hidden; min-height: 100vh; display: flex; flex-direction: column; }
 .section--hero { min-height: max(100vh, 900px); }
 
 .section-pad {
@@ -69,14 +69,15 @@ body {
 @media (min-width: 1024px) { .h2 { white-space: nowrap; line-height: 1.05; } }
 .h3 { font-weight: 300; letter-spacing: var(--tracking-h3); line-height: 1.2; font-size: clamp(20px, 18.514px + .381vw, 24px); }
 
-/* measure: the boards wrap copy at roughly 600px so it stays on the dark side of the bloom */
-.intro, .facts, .outro, .hero-overview { max-width: 600px; }
-.intro { color: var(--color-ink-2); line-height: 1.55; font-size: clamp(16px, 14.886px + .286vw, 19px); }
-.outro { color: var(--color-ink-2); line-height: 1.55; font-size: clamp(14px, 13.257px + .190vw, 16px); }
-.card-text { color: var(--color-ink-2); line-height: 1.55; font-size: clamp(14px, 13.257px + .190vw, 16px); }
+/* type scale, four body sizes only:
+   hero overview 24/18 · section prose 18/16 · card text 16/14 · mono labels 12/11
+   measure: 780px, wide enough to keep each section to about one screen */
+.intro, .facts, .outro, .hero-overview { max-width: 780px; }
 .hero-overview { color: var(--color-ink-2); line-height: 1.5; font-size: clamp(18px, 15.771px + .571vw, 24px); }
+.intro, .outro, .facts { color: var(--color-ink-2); line-height: 1.55; font-size: clamp(16px, 15.257px + .1905vw, 18px); }
+.card-text { color: var(--color-ink-2); line-height: 1.55; font-size: clamp(14px, 13.257px + .1905vw, 16px); }
 
-.facts { display: flex; flex-direction: column; gap: 6px; color: var(--color-ink-2); line-height: 1.55; font-size: clamp(14px, 13.257px + .190vw, 16px); }
+.facts { display: flex; flex-direction: column; gap: 6px; }
 .facts li { position: relative; padding-left: 20px; }
 .facts li::before { content: ''; position: absolute; left: 2px; top: .7em; width: 6px; height: 6px; border-radius: 50%; background: rgba(255, 255, 255, .4); }
 
@@ -100,7 +101,10 @@ body {
 
 .card { width: 100%; padding: 14px; }
 @media (min-width: 641px) { .card { padding: 28px; } }
-.card--pair { max-width: 820px; min-height: 350px; }
+/* S1 and S2 share one card size: 720px wide, same height on desktop */
+.card--pair { width: 100%; max-width: 720px; padding: 14px; }
+@media (min-width: 641px) { .card--pair { padding: 24px 28px; } }
+@media (min-width: 900px) { .card--pair { min-height: 264px; } }
 
 /* ---------- controls ---------- */
 
@@ -173,7 +177,8 @@ input[type='range'].slider::-moz-range-thumb {
 
 /* ---------- 01 rgb mixer ---------- */
 
-.mixer-well { min-height: 294px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+.mixer-card { display: flex; }
+.mixer-well { flex: 1; display: flex; align-items: center; justify-content: center; overflow: hidden; }
 #rgb-mixer { display: block; width: 100%; height: auto; isolation: isolate; }
 .rgb-circle { mix-blend-mode: screen; touch-action: none; cursor: grab; }
 .rgb-circle:active { cursor: grabbing; }
@@ -182,27 +187,29 @@ input[type='range'].slider::-moz-range-thumb {
 
 /* ---------- 02 storing colors ---------- */
 
-.numbers-card { display: grid; gap: 24px; align-items: center; }
-@media (min-width: 900px) { .numbers-card { grid-template-columns: 281px 1fr; gap: 36px; } }
+/* compact card: channel lights left, three sliders + the mixed result right */
+.numbers-card { display: grid; gap: 20px; align-items: center; }
+@media (min-width: 900px) { .numbers-card { grid-template-columns: 240px 1fr; gap: 40px; } }
 
-/* venn of the three channel lights, positions from the board (281 x 247 at desktop) */
-.swatch-venn { position: relative; width: 206px; aspect-ratio: 281 / 247; isolation: isolate; justify-self: center; }
-@media (min-width: 641px) { .swatch-venn { width: 281px; } }
-.venn-circle { position: absolute; width: 53.4%; aspect-ratio: 1; border-radius: 50%; mix-blend-mode: screen; }
-.venn-r { left: 22.8%; top: 0; }
-.venn-g { left: .4%; top: 38.1%; }
-.venn-b { left: 45.2%; top: 38.1%; }
-.venn-label { position: absolute; transform: translate(-50%, -50%); font-size: 22px; font-weight: 300; line-height: 1; color: #fff; }
-.venn-label--r { left: 48.8%; top: 14.2%; }
-.venn-label--g { left: 12.5%; top: 85%; }
-.venn-label--b { left: 85%; top: 85%; }
+/* the three channel lights, same size and spacing as the S1 mixer circles
+   (r=62, offsets 37/64 in its 760-wide viewBox), letters centred on each circle */
+.swatch-venn { position: relative; width: 192px; aspect-ratio: 172 / 164; isolation: isolate; justify-self: center; }
+@media (min-width: 641px) { .swatch-venn { width: 172px; } }
+.venn-circle { position: absolute; width: 62.8%; aspect-ratio: 1; border-radius: 50%; mix-blend-mode: screen; }
+.venn-r { left: 18.6%; top: 0; }
+.venn-g { left: 0; top: 34.1%; }
+.venn-b { left: 37.2%; top: 34.1%; }
+.venn-label { position: absolute; transform: translate(-50%, -50%); font-size: 19px; font-weight: 300; line-height: 1; color: #fff; }
+.venn-label--r { left: 50%; top: 32.9%; }
+.venn-label--g { left: 31.4%; top: 67.1%; }
+.venn-label--b { left: 68.6%; top: 67.1%; }
 
-.numbers-controls { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
-.readout { margin-top: 12px; padding: 18px 20px; }
-.readout-cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
-.readout-cols .stat-number { margin: 2px 0 4px; }
-.readout-foot { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 6px 16px; margin-top: 16px; padding-top: 14px; border-top: 1px solid rgba(255, 255, 255, .08); }
-.hex6 { font-size: 16px; color: var(--color-ink); letter-spacing: .08em; }
+.numbers-controls { display: flex; flex-direction: column; min-width: 0; }
+.channel-out { display: flex; gap: 14px; }
+.channel-out span:last-child { color: var(--color-ink-3); }
+.mix-result { display: flex; align-items: center; gap: 14px; margin-top: 10px; }
+.mix-swatch { width: 40px; height: 40px; border-radius: 10px; border: 1px solid rgba(255, 255, 255, .16); }
+.hex6 { font-size: 14px; color: var(--color-ink); letter-spacing: .08em; }
 
 /* ---------- 03 digitization ---------- */
 
