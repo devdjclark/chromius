@@ -131,3 +131,27 @@ input[type='range'].slider::-moz-range-thumb {
 @media (prefers-reduced-motion: reduce) {
   * { animation: none !important; transition: none !important; }
 }
+
+/* S6 spec table (DESIGN.md §6.7): a 4-column table overflows sideways on narrow
+   screens, so below 640px each row stacks into a block instead of scrolling.
+   The header row stays in the DOM (visually hidden, not display:none) so
+   th[scope=col] context is still announced to screen readers at every size. */
+@media (max-width: 640px) {
+  .spec-table thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+  }
+  .spec-table tbody,
+  .spec-table tr,
+  .spec-table td {
+    display: block;
+    width: 100%;
+  }
+  .spec-table tr { margin-bottom: 20px; }
+  .spec-table tr:last-child { margin-bottom: 0; }
+  .spec-table td { padding: 4px 0; }
+}
