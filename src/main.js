@@ -5,6 +5,7 @@ import { initColorSliders } from './color-sliders.js';
 import { initQuantizeDemo } from './quantize-demo.js';
 import { initBandingDemo } from './banding-demo.js';
 import { initAudioButton } from './audio.js';
+import { initMotion } from './motion.js';
 
 initNav();
 initRgbMixer();
@@ -12,3 +13,4 @@ initColorSliders();
 initQuantizeDemo();
 initBandingDemo();
 initAudioButton();
+initMotion();
